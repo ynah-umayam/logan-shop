@@ -1,0 +1,34 @@
+<ng-container *ngIf="productList?.length; else emptyMessage">
+  <mat-grid-list cols="4" rowHeight="360px">
+    @for (product of productList; track product) {
+      <mat-grid-tile>
+        <mat-card class="product-container">
+          <img
+            mat-card-image
+            [src]="product.imgUrl"
+            [alt]="product.title"
+            class="product-image"
+          />
+
+          <mat-card-content>
+            <p class="product-title">{{ product.title }}</p>
+            <h3 class="product-price text-accent">
+              {{ product.price | currency }}
+            </h3>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button color="accent">Add to cart</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    }
+  </mat-grid-list>
+</ng-container>
+
+<ng-template #emptyMessage>
+  <mat-card class="message-container">
+    <mat-card-content>
+      <p>No results found</p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

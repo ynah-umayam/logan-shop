@@ -1,0 +1,16 @@
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-panel {
+  width: 25%;
+}
+
+.product-panel {
+  width: 75%;
+  margin-top: 8px;
+}

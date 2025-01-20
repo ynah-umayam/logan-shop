@@ -1,0 +1,19 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  color: black;
+
+  &-icon {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+  }
+
+  &-text {
+    font-size: 24px;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,10 @@
+<div class="main-container">
+  <div class="filter-panel">
+    <app-categories
+      (selectCategoryGroup)="selectCategoryGroup($event)"
+    ></app-categories>
+  </div>
+  <div class="product-panel">
+    <app-product-list></app-product-list>
+  </div>
+</div>

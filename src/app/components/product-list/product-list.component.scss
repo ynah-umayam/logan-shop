@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+.product-container {
+  max-width: 200px;
+  cursor: pointer;
+}
+
+.product-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-image {
+  width: 188px;
+  height: 188px;
+  padding: 8px;
+  object-fit: scale-down;
+}

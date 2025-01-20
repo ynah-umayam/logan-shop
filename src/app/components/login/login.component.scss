@@ -1,0 +1,34 @@
+.logo-container {
+  padding-top: 64px;
+  padding-bottom: 32px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 32px;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  padding-top: 32px;
+  height: 60vh;
+
+  &__input-container,
+  &__button-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    margin-bottom: 8px;
+  }
+}

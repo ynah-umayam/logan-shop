@@ -1,0 +1,38 @@
+<mat-toolbar class="header" color="primary">
+  <div class="header-top">
+    <div class="container">
+      <nav class="top-nav">
+        <a mat-button>Sign up</a>
+        <a mat-button>Login</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="header-main">
+    <div class="container">
+      <div class="main-content">
+        <app-logo color="white"></app-logo>
+
+        <div class="search-bar">
+          <mat-form-field appearance="outline" class="search-field">
+            <input
+              matInput
+              placeholder="Search for products, brands and more"
+            />
+            <button mat-icon-button matSuffix color="primary">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="header-actions">
+          <button mat-icon-button class="cart-button">
+            <mat-icon matBadge="0" matBadgeColor="accent"
+              >shopping_cart</mat-icon
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,64 @@
+<div class="logo-container">
+  <app-logo></app-logo>
+</div>
+<div class="login-container">
+  <mat-card>
+    <mat-card-header> <mat-card-title>Login</mat-card-title> </mat-card-header>
+    <mat-card-content>
+      <div class="login-content" [formGroup]="formGroup">
+        <div *ngIf="isAuthenticationFailed" class="message-container--danger">
+          <p class="text-danger">
+            Your account and/or password is incorrect, please try again.
+          </p>
+        </div>
+        <div class="login-content__input-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="Email"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="login-content__button-container">
+          <button
+            mat-flat-button
+            (click)="forgotPassword()"
+            class="login-content__button"
+          >
+            Forgot password
+          </button>
+          <button
+            mat-flat-button
+            [disabled]="!formGroup.valid"
+            color="primary"
+            (click)="login()"
+            class="login-content__button"
+          >
+            Log in
+          </button>
+          <button
+            mat-flat-button
+            (click)="signUp()"
+            class="login-content__button"
+          >
+            Sign up
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,21 @@
+<div class="category-container">
+  <div class="category__title" aria-label="Category">
+    <mat-icon>menu</mat-icon>
+    <h4>Category</h4>
+  </div>
+  <div class="category__list">
+    @for (category of categoryGroupings; track category) {
+      <button
+        mat-button
+        color="primary"
+        class="category__button"
+        (click)="onSelectCategoryGroup(category)"
+        [ngClass]="{
+          'text-accent': selectedCategoryGroup?.groupKey === category.groupKey,
+        }"
+      >
+        {{ category.groupName }}
+      </button>
+    }
+  </div>
+</div>
