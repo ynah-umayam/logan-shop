@@ -1,10 +1,17 @@
 <mat-toolbar class="header" color="primary">
   <div class="header-top">
     <div class="container">
-      <nav class="top-nav">
-        <a mat-button>Sign up</a>
-        <a mat-button>Login</a>
-      </nav>
+      @if (user?.email) {
+        <nav class="top-nav">
+          <a mat-button>Hi, {{ user.firstName }}</a>
+          <a mat-button (click)="logout()">Logout</a>
+        </nav>
+      } @else {
+        <nav class="top-nav">
+          <a mat-button>Sign up</a>
+          <a mat-button (click)="goToLogin()">Login</a>
+        </nav>
+      }
     </div>
   </div>
 
@@ -26,8 +33,15 @@
         </div>
 
         <div class="header-actions">
-          <button mat-icon-button class="cart-button">
-            <mat-icon matBadge="0" matBadgeColor="accent"
+          <button
+            mat-icon-button
+            class="cart-button"
+            (click)="goToCartDetails()"
+          >
+            <mat-icon
+              [matBadge]="cartCount"
+              matBadgeColor="accent"
+              aria-hidden="false"
               >shopping_cart</mat-icon
             >
           </button>

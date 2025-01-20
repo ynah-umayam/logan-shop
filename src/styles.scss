@@ -44,9 +44,14 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+p {
+  margin: 0;
 }
 
 .text-accent {
@@ -61,4 +66,10 @@ body {
   padding: 4px 16px;
   background: mat.get-color-from-palette($logan-shop-warn, 50);
   border-radius: 4px;
+}
+
+.product-rating {
+  display: flex;
+  align-items: end;
+  gap: 4px;
 }

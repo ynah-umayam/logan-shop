@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatIconModule],
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LogoComponent {
   @Input() color = 'black';

@@ -1,8 +1,11 @@
 <ng-container *ngIf="productList?.length; else emptyMessage">
-  <mat-grid-list cols="4" rowHeight="360px">
+  <mat-grid-list cols="4" rowHeight="380px">
     @for (product of productList; track product) {
       <mat-grid-tile>
-        <mat-card class="product-container">
+        <mat-card
+          class="product-container"
+          (click)="goToProductDetails(product)"
+        >
           <img
             mat-card-image
             [src]="product.imgUrl"
@@ -12,12 +15,25 @@
 
           <mat-card-content>
             <p class="product-title">{{ product.title }}</p>
+            <div class="product-details">
+              <div class="product-rating">
+                <mat-icon color="accent">star</mat-icon>
+                <span>{{ product.stars }}</span>
+              </div>
+              <p class="product-sold">{{ product.boughtInLastMonth }} sold</p>
+            </div>
             <h3 class="product-price text-accent">
               {{ product.price | currency }}
             </h3>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-flat-button color="accent">Add to cart</button>
+            <button
+              mat-flat-button
+              color="accent"
+              (click)="addProductToCart($event, product)"
+            >
+              Add to cart
+            </button>
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>

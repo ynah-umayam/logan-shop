@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { Category, CategoryGroup, Product } from '../models';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,7 +9,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductService {
   private filteredProducts = new BehaviorSubject<Product[]>([]);
+  private productsInCart = new BehaviorSubject<{ [key: string]: Product[] }>(
+    undefined,
+  );
+
   public filteredProducts$ = this.filteredProducts.asObservable();
+  public productsInCart$ = this.productsInCart.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -60,5 +65,31 @@ export class ProductService {
       .subscribe((products) => {
         this.filteredProducts.next(products);
       });
+  }
+
+  addProductToCart(product: Product, quantity: number = 1): void {
+    const currentCart = this.productsInCart.value;
+    const products = Array.from({ length: quantity }, () => product);
+    const updatedCart = {
+      ...currentCart,
+      [product.asin]: [...(currentCart?.[product.asin] || []), ...products],
+    };
+    this.productsInCart.next(updatedCart);
+  }
+
+  removeProductFromCart(productId: number): void {
+    const currentCart = this.productsInCart.value;
+
+    const updatedCart = {
+      ...currentCart,
+      [productId]: (currentCart[productId] || []).splice(0, 1),
+    };
+    this.productsInCart.next(updatedCart);
+  }
+
+  getCartCount$(): Observable<number> {
+    return this.productsInCart$.pipe(
+      map((products) => Object.keys(products || []).length),
+    );
   }
 }

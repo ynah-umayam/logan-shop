@@ -1,5 +1,8 @@
 @if (isHeaderEnabled) {
-  <app-header></app-header>
+  <app-header
+    [user]="user$ | async"
+    [cartCount]="cartCount$ | async"
+  ></app-header>
 }
 <div><router-outlet></router-outlet></div>
 <app-footer></app-footer>

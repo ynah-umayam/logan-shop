@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,7 +32,7 @@ import { AuthenticateService } from '../../services';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponet implements OnInit {
+export class LoginComponent {
   formGroup: FormGroup;
   isAuthenticationFailed = false;
   constructor(
@@ -45,8 +45,6 @@ export class LoginComponet implements OnInit {
       password: ['', [Validators.required]],
     });
   }
-
-  ngOnInit(): void {}
 
   forgotPassword(): void {
     window.open(
@@ -66,7 +64,7 @@ export class LoginComponet implements OnInit {
         .pipe(take(1))
         .subscribe((isAuthenticated) => {
           if (isAuthenticated) {
-            this.router.navigateByUrl('/main');
+            this.router.navigateByUrl('/product-details');
           } else {
             this.isAuthenticationFailed = true;
           }

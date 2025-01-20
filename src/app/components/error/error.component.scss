@@ -3,25 +3,19 @@
   padding-bottom: 32px;
 }
 
-.login-container {
+.error-container {
   display: flex;
   justify-content: center;
   padding-bottom: 32px;
 }
 
-.login-content {
+.error-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 400px;
   padding-top: 32px;
   height: 60vh;
-
-  &__input-container,
-  &__button-container {
-    display: flex;
-    flex-direction: column;
-  }
 
   &__button {
     margin-bottom: 8px;
