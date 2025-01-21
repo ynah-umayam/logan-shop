@@ -24,7 +24,8 @@
           <mat-form-field appearance="outline" class="search-field">
             <input
               matInput
-              placeholder="Search for products, brands and more"
+              placeholder="Search for products"
+              [formControl]="form"
             />
             <button mat-icon-button matSuffix color="primary">
               <mat-icon>search</mat-icon>

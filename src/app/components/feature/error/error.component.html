@@ -2,8 +2,8 @@
   <app-logo></app-logo>
 </div>
 <div class="error-container">
-  <mat-card>
-    <mat-card-content>
+  <app-shared-container>
+    <div content>
       <div class="error-content">
         <div class="message-container--danger">
           <p class="text-danger">
@@ -11,16 +11,17 @@
             continue shopping.
           </p>
         </div>
-
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="goToLogin()"
-          class="error-content__button"
-        >
-          Go to Log in
-        </button>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+    <div actions>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="goToLogin()"
+        class="error-content__button"
+      >
+        Go to Log in
+      </button>
+    </div>
+  </app-shared-container>
 </div>

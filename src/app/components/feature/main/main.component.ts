@@ -15,6 +15,6 @@ export class MainComponent {
   constructor(private productService: ProductService) {}
 
   selectCategoryGroup(categoryGroup: CategoryGroup) {
-    this.productService.filterProducts$(categoryGroup);
+    this.productService.filterProducts$(undefined, categoryGroup);
   }
 }

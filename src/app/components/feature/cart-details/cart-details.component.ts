@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../../services';
-import { Subject, Subscription, take, takeUntil } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CartProduct } from '../../../models';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { SelectionModel } from '@angular/cdk/collections';
 import {
   FormArray,
   FormBuilder,
@@ -59,7 +58,6 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.productService.productsInCart$.subscribe((products) => {
-        // this.formSubscriptions.unsubscribe();
         if (!products?.length) {
           this.goToMain();
         } else {
@@ -94,12 +92,9 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
 
       const selectControl = this.formArray.at(index).get('select');
       if (selectControl) {
-        const subscription = selectControl.valueChanges.subscribe((value) => {
+        const subscription = selectControl.valueChanges.subscribe(() => {
           const selecteProduct = this.products[index];
-          this.productService.selectProductFromCart(
-            selecteProduct?.asin,
-            value,
-          );
+          this.productService.selectProductFromCart(selecteProduct?.asin);
         });
         this.formSubscriptions.push(subscription);
       }
@@ -134,6 +129,13 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/main');
   }
 
+  checkout(): void {
+    this.getSelectedProducts().forEach((product) => {
+      this.productService.removeProductFromCart(product.asin);
+    });
+    this.router.navigateByUrl('/success');
+  }
+
   removeProductFromCart(product: CartProduct) {
     this.productService.removeProductFromCart(product.asin);
   }
@@ -142,7 +144,7 @@ export class CartDetailsComponent implements OnInit, OnDestroy {
     const selectedProducts = this.getSelectedProducts();
     this.totalItems = selectedProducts.length;
     this.totalPrice = selectedProducts.reduce((a, b) => {
-      return a + b.quantity * b.price;
+      return a + b.totalPrice;
     }, 0);
   }
 

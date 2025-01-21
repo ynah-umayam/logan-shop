@@ -3,7 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { LogoComponent } from '../logo/logo.component';
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   standalone: true,
   imports: [
+    CommonModule,
     MatToolbarModule,
     MatIconModule,
     MatFormField,
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
     MatBadgeModule,
     FormsModule,
     LogoComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -33,6 +35,7 @@ export class HeaderComponent {
 
   @Input() user: User;
   @Input() cartCount: number = 0;
+  @Input() form: FormControl;
 
   goToLogin() {
     this.router.navigateByUrl('/login');

@@ -33,6 +33,14 @@
           mat-stroked-button
           color="secondary"
           class="product-button"
+          (click)="goToMain()"
+        >
+          Back
+        </button>
+        <button
+          mat-stroked-button
+          color="secondary"
+          class="product-button"
           (click)="addToCart()"
           [disabled]="!countControl.value || countControl.value === '0'"
         >

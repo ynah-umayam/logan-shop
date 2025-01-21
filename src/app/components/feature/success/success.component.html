@@ -1,1 +1,23 @@
-<p>success works!</p>
+<div class="success-container">
+  <app-shared-container>
+    <div content>
+      <div class="success-content">
+        <div class="message-container--success">
+          <p class="message--success">
+            You have successfully placed your order!
+          </p>
+        </div>
+      </div>
+    </div>
+    <div actions>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="goToMain()"
+        class="success-content__button"
+      >
+        Continue shopping
+      </button>
+    </div>
+  </app-shared-container>
+</div>

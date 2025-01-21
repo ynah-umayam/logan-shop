@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { LogoComponent } from '../../ui/logo/logo.component';
@@ -24,7 +23,6 @@ import { SharedContainerComponent } from '../../ui/shared-container/shared-conta
     CommonModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

@@ -1,0 +1,22 @@
+.success-container {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.message--success {
+  padding: 16px 8px;
+}
+
+.success-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  padding-bottom: 32px;
+
+  &__button {
+    margin-bottom: 8px;
+    width: 400px;
+  }
+}

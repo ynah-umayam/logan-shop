@@ -9,6 +9,7 @@
       color="accent"
       class="product-button"
       [disabled]="getSelectedProducts().length === 0"
+      (click)="checkout()"
     >
       Check out
     </button>

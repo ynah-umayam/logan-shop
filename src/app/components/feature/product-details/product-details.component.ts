@@ -37,13 +37,18 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.product) {
-      this.router.navigateByUrl('/main');
+      this.goToMain();
     }
   }
 
   buyNow(): void {
-    throw new Error('Method not implemented.');
+    this.router.navigateByUrl('/success');
   }
+
+  goToMain(): void {
+    this.router.navigateByUrl('/main');
+  }
+
   addToCart(): void {
     const quantity = parseInt(this.countControl.value);
     this.productService.addProductToCart(this.product, quantity, true);

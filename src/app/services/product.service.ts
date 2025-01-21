@@ -10,11 +10,21 @@ import { HttpClient } from '@angular/common/http';
 export class ProductService {
   private filteredProducts = new BehaviorSubject<Product[]>([]);
   private productsInCart = new BehaviorSubject<CartProduct[]>(undefined);
+  private selectedCategoryGroup = new BehaviorSubject<CategoryGroup>(undefined);
 
   public filteredProducts$ = this.filteredProducts.asObservable();
   public productsInCart$ = this.productsInCart.asObservable();
+  public selectedCategoryGroup$ = this.selectedCategoryGroup.asObservable();
 
   constructor(private http: HttpClient) {}
+
+  setFilteredProducts(products: Product[]): void {
+    this.filteredProducts.next(products);
+  }
+
+  setProductsInCart(products: CartProduct[]): void {
+    this.productsInCart.next(products);
+  }
 
   getCategories$(): Observable<Category[]> {
     return this.http.get<any>('/assets/mocks/categories.json').pipe(
@@ -46,22 +56,35 @@ export class ProductService {
     );
   }
 
-  filterProducts$(categoryGroup: CategoryGroup): void {
+  filterProducts$(keyword: string, categoryGroup?: CategoryGroup): void {
     this.getProducts$()
       .pipe(
         map((products) => {
-          if (categoryGroup?.groupKey === 'all') {
-            return products;
+          let filteredProducts: Product[] = [];
+          const selectedCategoryGroup =
+            categoryGroup || this.selectedCategoryGroup.value;
+          if (selectedCategoryGroup?.groupKey === 'all') {
+            filteredProducts = products;
           } else {
-            return (products || []).filter((product) =>
-              (categoryGroup?.categoryList || []).includes(product.categoryId),
+            filteredProducts = (products || []).filter((product) =>
+              (selectedCategoryGroup?.categoryList || []).includes(
+                product.categoryId,
+              ),
             );
           }
+
+          if (keyword) {
+            filteredProducts = (filteredProducts || []).filter((product) =>
+              this.isKeywordMatched(product.title, keyword),
+            );
+          }
+          this.selectedCategoryGroup.next(selectedCategoryGroup);
+          return filteredProducts;
         }),
         take(1),
       )
       .subscribe((products) => {
-        this.filteredProducts.next(products);
+        this.setFilteredProducts(products);
       });
   }
 
@@ -92,10 +115,10 @@ export class ProductService {
     } else {
       currentCart.push({ ...product, quantity, totalPrice });
     }
-    this.productsInCart.next(currentCart);
+    this.setProductsInCart(currentCart);
   }
 
-  selectProductFromCart(productId: string, isSelected: boolean): void {
+  selectProductFromCart(productId: string): void {
     const currentCart = this.productsInCart.value;
     const productIndex = currentCart.findIndex(
       (cartProduct) => cartProduct.asin === productId,
@@ -107,8 +130,7 @@ export class ProductService {
         isSelected: !currentCart[productIndex].isSelected,
       };
     }
-
-    this.productsInCart.next(currentCart);
+    this.setProductsInCart(currentCart);
   }
 
   toggleAllProductsFromCart(): void {
@@ -135,5 +157,10 @@ export class ProductService {
     return this.productsInCart$.pipe(
       map((products) => Object.keys(products || []).length),
     );
+  }
+
+  private isKeywordMatched(text: string, keyword: string): boolean {
+    const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+    return regex.test(text);
   }
 }

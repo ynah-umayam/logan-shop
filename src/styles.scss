@@ -68,6 +68,12 @@ p {
   border-radius: 4px;
 }
 
+.message-container--success {
+  padding: 4px 16px;
+  background: mat.get-color-from-palette(mat.$blue-palette, 100);
+  border-radius: 4px;
+}
+
 .product-rating {
   display: flex;
   align-items: end;

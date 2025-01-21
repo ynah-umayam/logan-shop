@@ -5,6 +5,7 @@ import {
   ProductDetailsComponent,
   ErrorComponent,
   CartDetailsComponent,
+  SuccessComponent,
 } from './components';
 import { authenticateGuard } from './guards/authenticate.guard';
 import { ProductResolver, UserResolver } from './resolvers';
@@ -37,5 +38,12 @@ export const routes: Routes = [
     },
   },
   { path: 'error', component: ErrorComponent },
+  {
+    path: 'success',
+    component: SuccessComponent,
+    resolve: {
+      user: UserResolver,
+    },
+  },
   { path: '**', redirectTo: 'main' },
 ];

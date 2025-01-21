@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 import { User } from '../models';
 import { Observable } from 'rxjs';
 import { AuthenticateService } from '../services';
