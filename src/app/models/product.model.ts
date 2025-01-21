@@ -10,3 +10,9 @@ export interface Product {
   isBestSeller: string;
   boughtInLastMonth: number;
 }
+
+export interface CartProduct extends Product {
+  isSelected?: boolean;
+  quantity: number;
+  totalPrice: number;
+}

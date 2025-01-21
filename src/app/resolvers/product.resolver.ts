@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../models';
+import { CartProduct, Product } from '../models';
 import { Observable } from 'rxjs';
 import { ProductService } from '../services';
 
@@ -9,7 +9,7 @@ import { ProductService } from '../services';
 export class ProductResolver {
   constructor(private productService: ProductService) {}
 
-  resolve(): Observable<{ [key: string]: Product[] }> {
+  resolve(): Observable<CartProduct[]> {
     return this.productService.productsInCart$;
   }
 }

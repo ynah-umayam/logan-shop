@@ -12,7 +12,6 @@ import { ProductResolver, UserResolver } from './resolvers';
 export const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  // { path: "sign-up", component: SignUpComponent },
   {
     path: 'main',
     component: MainComponent,

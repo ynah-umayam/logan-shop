@@ -1,0 +1,53 @@
+<div class="product-details__container">
+  @if (product) {
+    <div class="product-image">
+      <img [src]="product.imgUrl" [alt]="product.title" />
+    </div>
+    <div class="product-details">
+      <h3 class="product-title">{{ product.title }}</h3>
+
+      <div class="product-stats">
+        <div class="product-rating">
+          <mat-icon color="accent">star</mat-icon>
+          <span>{{ product.stars }}</span>
+        </div>
+        <div class="product-review">
+          {{
+            product.reviews === 1
+              ? product.reviews + " review"
+              : product.reviews + " reviews"
+          }}
+        </div>
+        <div class="product-sold">{{ product.boughtInLastMonth }} sold</div>
+      </div>
+
+      <h1 class="product-price text-accent">
+        {{ product.price | currency }}
+      </h1>
+      <div class="quantity">
+        <p>Quantity:</p>
+        <app-quantity [form]="countControl"></app-quantity>
+      </div>
+      <div>
+        <button
+          mat-stroked-button
+          color="secondary"
+          class="product-button"
+          (click)="addToCart()"
+          [disabled]="!countControl.value || countControl.value === '0'"
+        >
+          Add to cart
+        </button>
+        <button
+          mat-flat-button
+          color="accent"
+          class="product-button"
+          (click)="buyNow()"
+          [disabled]="!countControl.value || countControl.value === '0'"
+        >
+          Buy now
+        </button>
+      </div>
+    </div>
+  }
+</div>

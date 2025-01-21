@@ -1,0 +1,14 @@
+<div class="quantity-control">
+  <button
+    mat-icon-button
+    (click)="decreaseQuantity($event)"
+    [disabled]="!form?.value || form?.value === 0"
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+  <h3 class="quantity-control__count">{{ form?.value || 0 }}</h3>
+  <input type="number" [formControl]="form" hidden />
+  <button mat-icon-button (click)="increaseQuantity($event)">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

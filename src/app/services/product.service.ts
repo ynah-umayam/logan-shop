@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Category, CategoryGroup, Product } from '../models';
+import { Category, CategoryGroup, Product, CartProduct } from '../models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -9,9 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductService {
   private filteredProducts = new BehaviorSubject<Product[]>([]);
-  private productsInCart = new BehaviorSubject<{ [key: string]: Product[] }>(
-    undefined,
-  );
+  private productsInCart = new BehaviorSubject<CartProduct[]>(undefined);
 
   public filteredProducts$ = this.filteredProducts.asObservable();
   public productsInCart$ = this.productsInCart.asObservable();
@@ -67,24 +65,70 @@ export class ProductService {
       });
   }
 
-  addProductToCart(product: Product, quantity: number = 1): void {
+  addProductToCart(
+    product: Product,
+    quantity: number = 1,
+    isUpdate: boolean = false,
+  ): void {
+    const currentCart = this.productsInCart.value || [];
+    let totalPrice = product.price * quantity;
+    const productIndex = currentCart.findIndex(
+      (cartProduct) => cartProduct.asin === product.asin,
+    );
+    if (productIndex !== -1) {
+      let updatedQuantity = currentCart[productIndex].quantity;
+      if (isUpdate) {
+        updatedQuantity = quantity;
+      } else {
+        updatedQuantity += quantity;
+      }
+      totalPrice = product.price * updatedQuantity;
+
+      currentCart[productIndex] = {
+        ...currentCart[productIndex],
+        quantity: updatedQuantity,
+        totalPrice,
+      };
+    } else {
+      currentCart.push({ ...product, quantity, totalPrice });
+    }
+    this.productsInCart.next(currentCart);
+  }
+
+  selectProductFromCart(productId: string, isSelected: boolean): void {
     const currentCart = this.productsInCart.value;
-    const products = Array.from({ length: quantity }, () => product);
-    const updatedCart = {
-      ...currentCart,
-      [product.asin]: [...(currentCart?.[product.asin] || []), ...products],
-    };
+    const productIndex = currentCart.findIndex(
+      (cartProduct) => cartProduct.asin === productId,
+    );
+
+    if (productIndex !== -1) {
+      currentCart[productIndex] = {
+        ...currentCart[productIndex],
+        isSelected: !currentCart[productIndex].isSelected,
+      };
+    }
+
+    this.productsInCart.next(currentCart);
+  }
+
+  toggleAllProductsFromCart(): void {
+    const currentCart = this.productsInCart.value;
+    const isAllSelected = (currentCart || []).every((item) => item.isSelected);
+    const updatedCart = (currentCart || []).map((item) => ({
+      ...item,
+      isSelected: !isAllSelected,
+    }));
     this.productsInCart.next(updatedCart);
   }
 
-  removeProductFromCart(productId: number): void {
+  removeProductFromCart(productId: string): void {
     const currentCart = this.productsInCart.value;
+    const productIndex = currentCart.findIndex(
+      (cartProduct) => cartProduct.asin === productId,
+    );
 
-    const updatedCart = {
-      ...currentCart,
-      [productId]: (currentCart[productId] || []).splice(0, 1),
-    };
-    this.productsInCart.next(updatedCart);
+    currentCart.splice(productIndex, 1);
+    this.productsInCart.next(currentCart);
   }
 
   getCartCount$(): Observable<number> {

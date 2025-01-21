@@ -1,0 +1,11 @@
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.quantity-control__count {
+  text-align: center;
+  width: 30px;
+}
